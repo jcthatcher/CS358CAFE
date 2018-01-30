@@ -1,0 +1,10 @@
+﻿1, Blueberry, 3.50
+2, Chai, 3.25
+3, Mango, 4.75
+4, Green Tea, 2.50
+5, Earl Grey, 5.98
+6, Darjeeling, 5.25
+7, Sencha, 7.65
+8, Masala, 6.50
+9, Keemum, 3.20
+10, Bai Mudan, 6.23

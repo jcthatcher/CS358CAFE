@@ -1,0 +1,5 @@
+﻿Cream, $0.00, 0.00
+Sugar, $0.00, 0.00
+Cinnamon, $1.00, 1.00
+Cocoa, $0.75, 0.75
+Whipped Cream, $1.50, 1.50

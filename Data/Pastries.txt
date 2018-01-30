@@ -1,0 +1,9 @@
+﻿1, Bun, 1.25
+2, English Muffin, 2.50
+3, Cinnamon Roll, 6.50
+4, Poppy Seed Roll, 5.00
+5, Danish Pastry, 6.50
+6, Puff Pastry, 4.50
+7, Baklava, 9.00
+8, Brioche, 7.88
+9, Waffle, 2.50
