@@ -301,7 +301,7 @@
             // 
             // btnCheckout
             // 
-            this.btnCheckout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnCheckout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnCheckout.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCheckout.Location = new System.Drawing.Point(320, 9);
             this.btnCheckout.Name = "btnCheckout";
@@ -309,6 +309,7 @@
             this.btnCheckout.TabIndex = 7;
             this.btnCheckout.Text = "Add Item To Start Order";
             this.btnCheckout.UseVisualStyleBackColor = false;
+            this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             // 
             // Form1
             // 

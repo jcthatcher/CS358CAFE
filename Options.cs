@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cafe
 {
-    class Options
+    public class Options
     {
         int optionID;
         int quantity;

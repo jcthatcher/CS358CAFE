@@ -14,13 +14,22 @@ namespace Cafe
     public partial class Form1 : Form
     {
         string dir = AppDomain.CurrentDomain.BaseDirectory;
+        Order masterOrder = new Order();
         OrderLine myLine;
+        bool firstItem;
 
         public Form1()
         {
             InitializeComponent();
             LoadCoffeeListView();
             LoadCoffeeOptions("1");
+            firstItem = true;
+        }
+
+        public void AddedFirstItem()
+        {
+            string msg = "Click checkout button above or continue shopping. You will not see this message again with this order.";
+            MessageBox.Show(msg, "Success!  Order updated.");
         }
 
         public void LoadCafeOptionsFromCSVFileToListBox(string csvName, ListBox box)
@@ -246,29 +255,52 @@ namespace Cafe
         {
             string price = txtPrice.Text;
             string priceUpdate = price.Remove(0, 1);
-            myLine = new OrderLine(1, txtName.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
+            AddItemToOrder(txtName.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
+            UpdateCart();
+            LoadTopCoffee();
+        }
 
-            foreach(var control in panel1.Controls)
+        private void AddItemToOrder(string itemName, double price, string description)
+        {
+            myLine = new OrderLine(1, itemName, price, description);
+
+            foreach (var control in panel1.Controls)
             {
-                
-                if(control is CheckBox)
+
+                if (control is CheckBox)
                 {
                     CheckBox box = (CheckBox)control;
 
                     if (box.Checked)
                     {
                         Options op = new Options();
-
                         string[] optionValues = ReturnSelectionInformation("/data/CoffeeOptions.txt", box.Tag.ToString());
                         op.Name = optionValues[1];
                         op.Quantity = 1;
                         op.Value = Convert.ToDouble(optionValues[3]);
-
                         myLine.OrderLineOptions.Add(op);
                     }
                 }
             }
-            LoadTopCoffee();
+            masterOrder.AddItemToOrder(myLine);
+            if (firstItem)
+            {
+                AddedFirstItem();
+            }
+            
+            firstItem = false;
+        }
+
+        private void UpdateCart()
+        {
+            string btnString = String.Format("Checkout:  {0} item at {1:C}", masterOrder.GetTotalItems(), masterOrder.GetOrderValue());
+            btnCheckout.Text = btnString;
+        }
+
+        private void btnCheckout_Click(object sender, EventArgs e)
+        {
+            CheckoutForm cForm = new CheckoutForm(masterOrder);
+            cForm.Show();
         }
     }
 }

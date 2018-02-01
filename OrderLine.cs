@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cafe
 {
-    class OrderLine
+    public class OrderLine
     {
         int optionIDTracker;
         string itemType;
@@ -23,6 +23,11 @@ namespace Cafe
         public double ProductPrice { get => productPrice;}
         public string ProductDescription { get => productDescription; set => productDescription = value; }
         internal List<Options> OrderLineOptions { get => orderLineOptions; set => orderLineOptions = value; }
+
+        public OrderLine()
+        {
+
+        }
 
         public OrderLine(string pName, double pPrice)
         {
