@@ -12,7 +12,12 @@ namespace Cafe
         int quantity;
         string name;
         double value;
-        
+
+        public Options()
+        {
+
+        }
+
         public Options(int id, string optionName, double optionPrice)
         {
             optionID = id;

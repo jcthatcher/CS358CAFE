@@ -1,9 +1,9 @@
-﻿2, Americano, $3.50,A strong hint of smokiness is evident in the aroma and first taste.
-3, Breve, $4.50,A complex coffee with an exotic and syrupy body.
-4, Caffe Latte, $7.50,This coffee delights the senses with the taste of ripe chocolate-toned fruit.
-9, Cafe Mocha, $6.00,Heavier bodied more complete and complex .
-8, Frappuccino, $7.00,Standard Frappuccino.
-7, Iced Coffee, $5.99,Cold coffee?  Some like it.
-5, Turkish, $8.00,A soaring lightness and lovely balance of sweet and dry tones.
-1, Yuanyang, $12.00,This coffee is so smooth you wouldn’t know it is decaffeinated.
-6, Good Times, $25.00,A fun easy to drink flavorful decaf coffee that really does have a great taste at an affordable price.
+﻿2, Americano,$3.50,A strong hint of smokiness is evident in the aroma and first taste.
+3, Breve,$4.50,A complex coffee with an exotic and syrupy body.
+4, Caffe Latte,$7.50,This coffee delights the senses with the taste of ripe chocolate-toned fruit.
+9, Cafe Mocha,$6.00,Heavier bodied more complete and complex .
+8, Frappuccino,$7.00,Standard Frappuccino.
+7, Iced Coffee,$5.99,Cold coffee?  Some like it.
+5, Turkish,$8.00,A soaring lightness and lovely balance of sweet and dry tones.
+1, Yuanyang,$12.00,This coffee is so smooth you wouldn’t know it is decaffeinated.
+6, Good Times,$25.00,A fun easy to drink flavorful decaf coffee that really does have a great taste at an affordable price.
