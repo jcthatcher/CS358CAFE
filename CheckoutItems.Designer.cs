@@ -39,33 +39,41 @@
             // txtName
             // 
             this.txtName.BackColor = System.Drawing.SystemColors.Control;
-            this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtName.CausesValidation = false;
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtName.Location = new System.Drawing.Point(9, 13);
+            this.txtName.Location = new System.Drawing.Point(9, 8);
+            this.txtName.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.txtName.MaximumSize = new System.Drawing.Size(360, 0);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(125, 16);
+            this.txtName.Size = new System.Drawing.Size(125, 23);
             this.txtName.TabIndex = 0;
             // 
             // txtOptions
             // 
             this.txtOptions.BackColor = System.Drawing.SystemColors.Control;
-            this.txtOptions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtOptions.Enabled = false;
+            this.txtOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOptions.CausesValidation = false;
             this.txtOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOptions.Location = new System.Drawing.Point(22, 36);
+            this.txtOptions.Location = new System.Drawing.Point(35, 34);
+            this.txtOptions.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.txtOptions.MaximumSize = new System.Drawing.Size(360, 0);
             this.txtOptions.Multiline = true;
             this.txtOptions.Name = "txtOptions";
-            this.txtOptions.Size = new System.Drawing.Size(133, 22);
+            this.txtOptions.Size = new System.Drawing.Size(133, 37);
             this.txtOptions.TabIndex = 1;
             // 
             // txtLinePrice
             // 
             this.txtLinePrice.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLinePrice.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLinePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLinePrice.CausesValidation = false;
             this.txtLinePrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLinePrice.Location = new System.Drawing.Point(305, 13);
+            this.txtLinePrice.Location = new System.Drawing.Point(255, 7);
+            this.txtLinePrice.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.txtLinePrice.MaximumSize = new System.Drawing.Size(360, 0);
             this.txtLinePrice.Name = "txtLinePrice";
-            this.txtLinePrice.Size = new System.Drawing.Size(100, 16);
+            this.txtLinePrice.Size = new System.Drawing.Size(65, 23);
             this.txtLinePrice.TabIndex = 2;
             this.txtLinePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtLinePrice.TextChanged += new System.EventHandler(this.txtLinePrice_TextChanged);
@@ -73,11 +81,14 @@
             // txtPrice
             // 
             this.txtPrice.BackColor = System.Drawing.SystemColors.Control;
-            this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrice.Location = new System.Drawing.Point(141, 13);
+            this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrice.CausesValidation = false;
+            this.txtPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrice.Location = new System.Drawing.Point(134, 10);
+            this.txtPrice.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.txtPrice.MaximumSize = new System.Drawing.Size(360, 0);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(100, 16);
+            this.txtPrice.Size = new System.Drawing.Size(64, 20);
             this.txtPrice.TabIndex = 4;
             this.txtPrice.TabStop = false;
             this.txtPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -92,7 +103,8 @@
             this.Controls.Add(this.txtName);
             this.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.Name = "CheckoutItems";
-            this.Size = new System.Drawing.Size(410, 65);
+            this.Size = new System.Drawing.Size(330, 77);
+            this.Load += new System.EventHandler(this.CheckoutItems_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

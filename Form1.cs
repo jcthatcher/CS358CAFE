@@ -85,7 +85,6 @@ namespace Cafe
         }
         private void WriteToDetailsFromSelection(string[] details)
         {
-            this.txtName.Text = details[1];
             this.txtRank.Text = details[0];
             this.txtPrice.Text = details[2];
             this.txtDescription.Text = details[3];
@@ -115,9 +114,10 @@ namespace Cafe
                         AutoSize = true,
                         Checked = false,
                         Tag = columns[0],
-                        Location = new Point(100, 185 + i * 18)
+                        Location = new Point(25, 250 + i * 18)
                     };
-                    this.panel1.Controls.Add(box);
+                    box.Font = new Font(box.Font.FontFamily, 8f);
+                    this.tabCoffee.Controls.Add(box);
                     i = i + 1;
                 }
             }
@@ -211,7 +211,6 @@ namespace Cafe
 
         private void LoadTopCoffee()
         {
-            lblName.Text = "Top Pick";
             btnAddItem.Text = "Add Top Pick";
             string[] columns = ReturnSelectionInformation("/data/Coffees.txt", "1");
             WriteToDetailsFromSelection(columns);
@@ -245,7 +244,6 @@ namespace Cafe
 
         private void listBoxCoffee_SelectedValueChanged(object sender, EventArgs e)
         {
-            lblName.Text = "Selection";
             btnAddItem.Text = "Add Selection to Order";            
             LoadCoffeeOptionsByName(listBoxCoffee.SelectedItem.ToString());
         }
@@ -267,16 +265,47 @@ namespace Cafe
             {
                 string price = txtPrice.Text;
                 string priceUpdate = price.Remove(0, 1);
-                AddItemToOrder(txtName.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
+                AddItemToOrder(listBoxCoffee.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
                 UpdateCart();
+                UpdateOrderSummaryView();
                 ClearTextBoxes();
             }
+        }
+
+        private void UpdateOrderSummaryView()
+        {
+            this.pnlCheckout.Controls.Clear();
+
+            int p = Convert.ToInt32(masterOrder.GetTotalItems());
+            Control[] myC = new Control[p];
+            int x = 1;
+            int y = 0;
+            int i = 0;
+            foreach (OrderLine o in masterOrder.LineItems)
+            {
+                CheckoutItems myCheck = new CheckoutItems
+                {
+                    Name = "myCheck" + i,
+                    Location = new Point(x, y),
+                    Size = new Size(331, 100),
+                    ItemName = o.ProductName,
+                    Price = o.ProductPrice.ToString("C"),
+                    LinePrice = o.TotalLineValue().ToString("C"),
+                    Ops = o.OrderLineOptions,
+                    Height = o.OrderLineOptions.Count * 10 + 50,
+                    Tag = "myCheck" + i,
+
+                };
+                myC[i] = myCheck;
+                y = y + o.OrderLineOptions.Count * 8 + 50;
+                i += 1;
+            }
+            this.pnlCheckout.Controls.AddRange(myC);
         }
 
         private void ClearTextBoxes()
         {
             txtDescription.Clear();
-            txtName.Clear();
             txtPrice.Clear();
             txtRank.Clear();
         }
@@ -285,7 +314,7 @@ namespace Cafe
         {
             myLine = new OrderLine(1, itemName, price, description);
 
-            foreach (var control in panel1.Controls)
+            foreach (var control in tabCoffee.Controls)
             {
 
                 if (control is CheckBox)
@@ -341,6 +370,17 @@ namespace Cafe
         {
             masterOrder.ClearOrder();
             UpdateCart();
+            UpdateOrderSummaryView();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

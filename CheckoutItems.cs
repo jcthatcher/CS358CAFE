@@ -47,8 +47,9 @@ namespace Cafe
 
                 txtOptions.Text = optionString;
                 Size size = TextRenderer.MeasureText(txtOptions.Text, txtOptions.Font);
-                txtOptions.Width = size.Width;
                 txtOptions.Height = size.Height;
+                txtOptions.Width = size.Width;
+                
                 
             }
         }
@@ -77,6 +78,11 @@ namespace Cafe
         }
 
         private void txtLinePrice_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckoutItems_Load(object sender, EventArgs e)
         {
 
         }
