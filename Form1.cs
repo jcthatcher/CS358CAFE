@@ -24,6 +24,16 @@ namespace Cafe
             LoadCoffeeListView();
             LoadCoffeeOptions("1");
             firstItem = true;
+        } 
+
+        public Form1(Order myOrder)
+        {
+            InitializeComponent();
+            LoadCoffeeListView();
+            LoadCoffeeOptions("1");
+            firstItem = false;
+            masterOrder = myOrder;
+
         }
 
         public void AddedFirstItem()
@@ -105,7 +115,7 @@ namespace Cafe
                         AutoSize = true,
                         Checked = false,
                         Tag = columns[0],
-                        Location = new Point(105, 180 + i * 21)
+                        Location = new Point(100, 185 + i * 18)
                     };
                     this.panel1.Controls.Add(box);
                     i = i + 1;
@@ -253,11 +263,22 @@ namespace Cafe
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            string price = txtPrice.Text;
-            string priceUpdate = price.Remove(0, 1);
-            AddItemToOrder(txtName.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
-            UpdateCart();
-            LoadTopCoffee();
+            if(txtDescription.Text.Length > 0)
+            {
+                string price = txtPrice.Text;
+                string priceUpdate = price.Remove(0, 1);
+                AddItemToOrder(txtName.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
+                UpdateCart();
+                ClearTextBoxes();
+            }
+        }
+
+        private void ClearTextBoxes()
+        {
+            txtDescription.Clear();
+            txtName.Clear();
+            txtPrice.Clear();
+            txtRank.Clear();
         }
 
         private void AddItemToOrder(string itemName, double price, string description)
@@ -293,14 +314,33 @@ namespace Cafe
 
         private void UpdateCart()
         {
-            string btnString = String.Format("Checkout:  {0} item at {1:C}", masterOrder.GetTotalItems(), masterOrder.GetOrderValue());
-            btnCheckout.Text = btnString;
+            lblItemInfo.Text = "Items: " + masterOrder.GetTotalItems().ToString();
+            lblItemSubtotal.Text = masterOrder.GetOrderValue().ToString("C");
+
+            //string btnString = String.Format("Checkout:  {0} item at {1:C}", masterOrder.GetTotalItems(), masterOrder.GetOrderValue());
+            //btnCheckout.Text = btnString;
         }
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             CheckoutForm cForm = new CheckoutForm(masterOrder);
-            cForm.Show();
+            cForm.ShowDialog();            
+        }
+
+        private void lblItemSubtotal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblItemInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            masterOrder.ClearOrder();
+            UpdateCart();
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Cafe
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form1 newForm1 = new Form1();
-            newForm1.Show();
+            //Form1 newForm1 = new Form1();
+           // newForm1.Show();
         }
 
         private void UpdateLabelTotal()
@@ -41,31 +41,39 @@ namespace Cafe
         {
             int p = Convert.ToInt32(order.GetTotalItems());
             Control[] myC = new Control[p];
-            int x = 5;
-            int y = 50;
+            int x = 1;
+            int y = 0;
             int i = 0;
             foreach(OrderLine o in order.LineItems)
             {
                 CheckoutItems myCheck = new CheckoutItems
                 {
                     Name = "myCheck" + i,
-                    Location = new Point(x, y + i * 100),
-                    Size = new Size(550, 100),
+                    Location = new Point(x, y),
+                    Size = new Size(412, 100),
                     ItemName = o.ProductName,
                     Price = o.ProductPrice.ToString("C"),
                     LinePrice = o.TotalLineValue().ToString("C"),
                     Ops = o.OrderLineOptions,
-                    Tag = "myCheck" + i,                 
+                    Height = o.OrderLineOptions.Count * 10 + 50,
+                    Tag = "myCheck" + i,
+                    
                 };
                 myC[i] = myCheck;
+                y = y + o.OrderLineOptions.Count * 8 + 50;
                 i += 1;
             }
-            this.Controls.AddRange(myC);
+            this.pnlCheckout.Controls.AddRange(myC);
         }
 
         private void btnFinalCheckOut(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -32,15 +32,16 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
             this.btnReturn = new System.Windows.Forms.Button();
+            this.pnlCheckout = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.button1.Location = new System.Drawing.Point(288, 477);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.button1.Location = new System.Drawing.Point(267, 499);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(187, 55);
+            this.button1.Size = new System.Drawing.Size(187, 33);
             this.button1.TabIndex = 0;
             this.button1.Text = "Checkout";
             this.button1.UseVisualStyleBackColor = false;
@@ -60,7 +61,7 @@
             // 
             this.lblPrice.AutoSize = true;
             this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(354, 444);
+            this.lblPrice.Location = new System.Drawing.Point(355, 460);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(99, 20);
             this.lblPrice.TabIndex = 4;
@@ -69,19 +70,31 @@
             // btnReturn
             // 
             this.btnReturn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.btnReturn.Location = new System.Drawing.Point(17, 477);
+            this.btnReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnReturn.Location = new System.Drawing.Point(17, 499);
             this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(187, 55);
+            this.btnReturn.Size = new System.Drawing.Size(187, 33);
             this.btnReturn.TabIndex = 5;
             this.btnReturn.Text = "Return to CAFE";
             this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
+            // pnlCheckout
+            // 
+            this.pnlCheckout.AutoScroll = true;
+            this.pnlCheckout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlCheckout.Location = new System.Drawing.Point(17, 47);
+            this.pnlCheckout.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.pnlCheckout.Name = "pnlCheckout";
+            this.pnlCheckout.Size = new System.Drawing.Size(437, 395);
+            this.pnlCheckout.TabIndex = 6;
             // 
             // CheckoutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(483, 544);
+            this.ClientSize = new System.Drawing.Size(476, 544);
+            this.Controls.Add(this.pnlCheckout);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblTitle);
@@ -100,5 +113,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Button btnReturn;
+        private System.Windows.Forms.Panel pnlCheckout;
     }
 }

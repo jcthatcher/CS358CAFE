@@ -46,6 +46,10 @@ namespace Cafe
                 }
 
                 txtOptions.Text = optionString;
+                Size size = TextRenderer.MeasureText(txtOptions.Text, txtOptions.Font);
+                txtOptions.Width = size.Width;
+                txtOptions.Height = size.Height;
+                
             }
         }
         public string Price { get => price; set
