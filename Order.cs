@@ -11,7 +11,6 @@ namespace Cafe
         List<OrderLine> lineItems = new List<OrderLine>();
         double orderTotal;
         int orderItemCount;
-        bool hasItems;
 
         public List<OrderLine> LineItems { get => lineItems; set => lineItems = value; }
 
