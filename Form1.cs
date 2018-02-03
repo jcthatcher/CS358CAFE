@@ -427,12 +427,16 @@ namespace Cafe
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            CheckoutForm cForm = new CheckoutForm(masterOrder);
-            cForm.ShowDialog();
-            masterOrder.ClearOrder();
-            UpdateCart();
-            UpdateOrderSummaryView();
-            InitializeOrder();
+            if (masterOrder.GetOrderValue() > 0.00d)
+            {
+                CheckoutForm cForm = new CheckoutForm(masterOrder);
+                cForm.ShowDialog();
+                masterOrder.ClearOrder();
+                UpdateCart();
+                UpdateOrderSummaryView();
+                InitializeOrder();
+            }
+
         }
 
         private void lblItemSubtotal_Click(object sender, EventArgs e)
