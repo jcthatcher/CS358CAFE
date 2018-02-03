@@ -48,7 +48,7 @@ namespace Cafe
                 txtOptions.Text = optionString;
                 Size size = TextRenderer.MeasureText(txtOptions.Text, txtOptions.Font);
                 txtOptions.Height = size.Height;
-                txtOptions.Width = size.Width;
+                txtOptions.Width = 135;
                 
                 
             }

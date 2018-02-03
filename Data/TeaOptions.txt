@@ -1,0 +1,3 @@
+﻿1, Cream,FREE,0.00
+2, Sugar,FREE,0.00
+3, Whipped Cream,$1.50,1.50

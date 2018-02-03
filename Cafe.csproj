@@ -109,6 +109,12 @@
     <Content Include="Data\Pastries.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\PastryOptions.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TeaOptions.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Teas.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

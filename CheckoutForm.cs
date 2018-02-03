@@ -18,53 +18,35 @@ namespace Cafe
         {
             order = myOrder;
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Form1 newForm1 = new Form1();
-           // newForm1.Show();
-        }
+        }       
 
         private void UpdateLabelTotal()
         {
-            lblPrice.Text = "Total " + order.GetOrderValue().ToString("C");
+            lblPrice.Text = "Your Total: " + order.GetOrderValue().ToString("C");
+            lblConfoOrderNumber.Text = "Order Number: " + GetOrderNumber().ToString();
+            lblConfoWaitTime.Text = "Estimated Wait Time: " + GetWaitTime().ToString() + " Minutes";
         }
 
         private void CheckoutForm_Load(object sender, EventArgs e)
         {
             UpdateLabelTotal();
-            PopulateListView();
+        }
+        
+        private int GetWaitTime()
+        {
+            System.Random random = new Random();
+            int result = random.Next(6, 13);
+            return result;
         }
 
-        private void PopulateListView()
+        private int GetOrderNumber()
         {
-            int p = Convert.ToInt32(order.GetTotalItems());
-            Control[] myC = new Control[p];
-            int x = 1;
-            int y = 0;
-            int i = 0;
-            foreach(OrderLine o in order.LineItems)
-            {
-                CheckoutItems myCheck = new CheckoutItems
-                {
-                    Name = "myCheck" + i,
-                    Location = new Point(x, y),
-                    Size = new Size(412, 100),
-                    ItemName = o.ProductName,
-                    Price = o.ProductPrice.ToString("C"),
-                    LinePrice = o.TotalLineValue().ToString("C"),
-                    Ops = o.OrderLineOptions,
-                    Height = o.OrderLineOptions.Count * 10 + 50,
-                    Tag = "myCheck" + i,
-                    
-                };
-                myC[i] = myCheck;
-                y = y + o.OrderLineOptions.Count * 8 + 50;
-                i += 1;
-            }
-            this.pnlCheckout.Controls.AddRange(myC);
+            System.Random random = new Random();
+            int result = random.Next(4, 12);
+            return result;            
         }
+
+       
 
         private void btnFinalCheckOut(object sender, EventArgs e)
         {

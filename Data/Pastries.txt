@@ -1,9 +1,8 @@
-﻿1, Bun, 1.25
-2, English Muffin, 2.50
-3, Cinnamon Roll, 6.50
-4, Poppy Seed Roll, 5.00
-5, Danish Pastry, 6.50
-6, Puff Pastry, 4.50
-7, Baklava, 9.00
-8, Brioche, 7.88
-9, Waffle, 2.50
+﻿1, Apple Strudel,$1.25,Sliced apples and other fruit are wrapped and cooked in layers of filo pastry.
+2, Baklava,$2.50,A Turkish pastry that is rich and sweet made of layers of filo pastry filled with chopped nuts.
+3, Bear Claw,$6.50,Sweet breakfast pastry.
+4, Blachinda,$5.00,A German pastry dessert. They are turnovers made of a pie-like crust and filled with a pumpkin filling.
+5, Danish Pastry,$6.50,A sweet pastry of Viennese origin which has become a speciality of Denmark and neighboring Scandinavian countries.
+6, Puff Pastry,$4.50,A light flaky leavened pastry
+8, Schaumrolle,$7.88,Cone or tube of pastry often filled with whipped cream
+9, Catalonia,$2.50,A cylindrical pastry filled with crema catalana that is deep fried and covered with crystallized sugar.

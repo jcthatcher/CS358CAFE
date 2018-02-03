@@ -14,39 +14,76 @@ namespace Cafe
     public partial class Form1 : Form
     {
         string dir = AppDomain.CurrentDomain.BaseDirectory;
+        string selectionCsvFile;
+        string lblSelectionText;
+        string lblOptionsText;
+        MenuSelection CurrentMenuSelection;
+        string optionCsvFile;
         Order masterOrder = new Order();
         OrderLine myLine;
-        bool firstItem;
 
+        enum MenuSelection { Coffee, Tea, Pastry };
+        
         public Form1()
         {
             InitializeComponent();
-            LoadCoffeeListView();
-            LoadCoffeeOptions("1");
-            firstItem = true;
-        } 
-
-        public Form1(Order myOrder)
-        {
-            InitializeComponent();
-            LoadCoffeeListView();
-            LoadCoffeeOptions("1");
-            firstItem = false;
-            masterOrder = myOrder;
-
+            InitializeOrder();
         }
 
-        public void AddedFirstItem()
-        {
-            string msg = "Click checkout button above or continue shopping. You will not see this message again with this order.";
-            MessageBox.Show(msg, "Success!  Order updated.");
+        private void InitializeOrder()
+        {            
+            radioCoffee.Checked = true;
+            MenuSelection CurrentMenuSelection = MenuSelection.Coffee;
+            UpdateEnvironmentalVariables();
+            ClearMenuListBox();
+            LoadCafeMenuFromCSVFileToListBox();
+            LoadMenuSelectionOptions("1");
+            UncheckAllCheckBoxes();
+            LoadTopPick();
         }
 
-        public void LoadCafeOptionsFromCSVFileToListBox(string csvName, ListBox box)
+        private void UpdateEnvironmentalVariables()
+        {
+            switch (CurrentMenuSelection)
+            {
+                case MenuSelection.Coffee:
+                    selectionCsvFile = "/data/Coffees.txt";
+                    optionCsvFile = "/data/CoffeeOptions.txt";
+                    lblSelectionText = "Coffee Selections";
+                    lblOptionsText = "Coffee Options";
+                    break;
+
+                case MenuSelection.Tea:
+                    selectionCsvFile = "/data/Teas.txt";
+                    optionCsvFile = "/data/TeaOptions.txt";
+                    lblSelectionText = "Tea Selections";
+                    lblOptionsText = "Tea Options";
+                    break;
+
+                case MenuSelection.Pastry:
+                    selectionCsvFile = "/data/Pastries.txt";
+                    optionCsvFile = "/data/PastryOptions.txt";
+                    lblSelectionText = "Pastry Selections";
+                    lblOptionsText = "Pastry Options";
+                    break;
+
+                default:
+                    selectionCsvFile = "/data/Coffees.txt";
+                    optionCsvFile = "/data/CoffeeOptions.txt";
+                    break;
+            }
+        }
+
+        private void BigSpenderAlert()
+        {
+            MessageBox.Show("Orders over $35.00 require prepayment", "Hey Big Spender!");
+        }
+
+        public void LoadCafeMenuFromCSVFileToListBox()
         {
             char separator = ',';
 
-            string pathCSV = dir + csvName;
+            string pathCSV = dir + selectionCsvFile;
 
             using (StreamReader sReader = new StreamReader(pathCSV))
             {
@@ -60,29 +97,66 @@ namespace Cafe
 
                     string[] columns = line.Split(separator);
 
-                    box.Items.Add(columns[1]);
+                    listBoxCoffee.Items.Add(columns[1]);
                 }
-            }            
+            }
+
+            lblOptions.Text = lblOptionsText;
+            lblSelection.Text = lblSelectionText;
         }
 
-        public void LoadCoffeeListView()
+        private void AddItemToOrder(string itemName, double price, string description)
         {
-            LoadCafeOptionsFromCSVFileToListBox("/data/Coffees.txt", listBoxCoffee);
+            if (masterOrder.GetOrderValue() + price > 35.00d)
+            {
+                BigSpenderAlert();
+            }
+            else
+            {
+                myLine = new OrderLine(1, itemName, price, description);
+
+                foreach (var control in panel2.Controls)
+                {
+
+                    if (control is CheckBox)
+                    {
+                        CheckBox box = (CheckBox)control;
+
+                        if (box.Checked)
+                        {
+                            Options op = new Options();
+                            string[] optionValues = ReturnSelectionInformation("/data/CoffeeOptions.txt", box.Tag.ToString());
+                            op.Name = optionValues[1];
+                            op.Quantity = 1;
+                            op.Value = Convert.ToDouble(optionValues[3]);
+                            myLine.OrderLineOptions.Add(op);
+                        }
+                    }
+                }
+                masterOrder.AddItemToOrder(myLine);
+            }
         }
 
-        public void LoadCoffeeOptions(string selectionID)
+        private void UpdateCart()
         {
-            string[] columns= ReturnSelectionInformation("/data/Coffees.txt", selectionID);
+            lblItemInfo.Text = "Items: " + masterOrder.GetTotalItems().ToString();
+            lblItemSubtotal.Text = masterOrder.GetOrderValue().ToString("C");
+        }
+
+        public void LoadMenuSelectionOptions(string selectionID)
+        {
+            string[] columns = ReturnSelectionInformation(selectionCsvFile, selectionID);
             WriteToDetailsFromSelection(columns);
-            LoadCafeOptionCheckBoxes("/data/CoffeeOptions.txt");
+            LoadCafeOptionCheckBoxes();
         }
 
-        public void LoadCoffeeOptionsByName(string selectionName)
+        public void LoadOptionsByName(string selectionName)
         {
-            string[] columns = ReturnSelectionInformationByName("/data/Coffees.txt", selectionName);
+            string[] columns = ReturnSelectionInformationByName(selectionCsvFile, selectionName);
             WriteToDetailsFromSelection(columns);
-            LoadCafeOptionCheckBoxes("/data/CoffeeOptions.txt");
+            LoadCafeOptionCheckBoxes();
         }
+
         private void WriteToDetailsFromSelection(string[] details)
         {
             this.txtRank.Text = details[0];
@@ -90,10 +164,10 @@ namespace Cafe
             this.txtDescription.Text = details[3];
         }
                
-        public void LoadCafeOptionCheckBoxes(string fileName)
+        public void LoadCafeOptionCheckBoxes()
         {
             int i = 1;
-            string path = dir + fileName; 
+            string path = dir + optionCsvFile; 
 
             using (StreamReader sReader = new StreamReader(path))
             {
@@ -117,15 +191,47 @@ namespace Cafe
                         Location = new Point(25, 250 + i * 18)
                     };
                     box.Font = new Font(box.Font.FontFamily, 8f);
-                    this.tabCoffee.Controls.Add(box);
+                    this.panel2.Controls.Add(box);
                     i = i + 1;
                 }
             }
         }
 
-        public void LoadTeaListView()
+        public void RemoveCheckBoxes()
         {
+            int checkBoxControls = panel2.Controls.OfType<CheckBox>().Count();
+            int i = 0;
 
+            CheckBox[] checkBoxes = new CheckBox[checkBoxControls];
+            
+            foreach (Control control in panel2.Controls)
+            {
+                if (control is CheckBox)
+                {
+                    CheckBox box = (CheckBox)control;
+                    checkBoxes[i] = box;
+                    i++;
+                }
+            }
+
+            for (int j = 0; j<checkBoxes.Length; j++)
+            {
+                panel2.Controls.Remove(checkBoxes[j]);
+            }
+        }
+
+        public void UncheckAllCheckBoxes()
+        {
+            foreach (var control in panel2.Controls)
+            {
+
+                if (control is CheckBox)
+                {
+                    CheckBox box = (CheckBox)control;
+
+                    box.Checked = false;
+                }
+            }
         }
 
         public string[] ReturnSelectionInformation(string fileName, string selectionID)
@@ -186,36 +292,47 @@ namespace Cafe
 
             return result;
         }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+       
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            LoadTopCoffee();
             
         }
 
-        private void LoadTopCoffee()
+        private void LoadTopPick()
         {
-            btnAddItem.Text = "Add Top Pick";
-            string[] columns = ReturnSelectionInformation("/data/Coffees.txt", "1");
+            string[] columns = ReturnSelectionInformation(selectionCsvFile, "1");
             WriteToDetailsFromSelection(columns);
+            int listLocation = listBoxCoffee.FindString(columns[1]);
+            listBoxCoffee.SetSelected(listLocation, true);
         }
-        
+
+        private void UpdateMenuItems()
+        {
+            ClearMenuListBox();
+            RemoveCheckBoxes();
+
+            if (radioCoffee.Checked)
+            {
+                CurrentMenuSelection = MenuSelection.Coffee;
+            }
+            if (radioPastry.Checked)
+            {
+                CurrentMenuSelection = MenuSelection.Pastry;
+            }
+            if (radioTea.Checked)
+            {
+                CurrentMenuSelection = MenuSelection.Tea;
+            }
+
+            UpdateEnvironmentalVariables();
+            LoadCafeMenuFromCSVFileToListBox();
+            LoadCafeOptionCheckBoxes();
+        }
+
+        private void ClearMenuListBox()
+        {
+            listBoxCoffee.Items.Clear();
+        }
 
         private void lblRank_Click(object sender, EventArgs e)
         {
@@ -243,16 +360,14 @@ namespace Cafe
         }
 
         private void listBoxCoffee_SelectedValueChanged(object sender, EventArgs e)
-        {
-            btnAddItem.Text = "Add Selection to Order";            
-            LoadCoffeeOptionsByName(listBoxCoffee.SelectedItem.ToString());
+        {         
+            LoadOptionsByName(listBoxCoffee.SelectedItem.ToString());
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-        
+        }       
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -268,7 +383,6 @@ namespace Cafe
                 AddItemToOrder(listBoxCoffee.Text, Convert.ToDouble(priceUpdate), txtDescription.Text);
                 UpdateCart();
                 UpdateOrderSummaryView();
-                ClearTextBoxes();
             }
         }
 
@@ -287,7 +401,8 @@ namespace Cafe
                 {
                     Name = "myCheck" + i,
                     Location = new Point(x, y),
-                    Size = new Size(331, 100),
+                    Size = new Size(322, 100),
+                    BackColor = Color.FromName("Gray"),
                     ItemName = o.ProductName,
                     Price = o.ProductPrice.ToString("C"),
                     LinePrice = o.TotalLineValue().ToString("C"),
@@ -308,52 +423,16 @@ namespace Cafe
             txtDescription.Clear();
             txtPrice.Clear();
             txtRank.Clear();
-        }
-
-        private void AddItemToOrder(string itemName, double price, string description)
-        {
-            myLine = new OrderLine(1, itemName, price, description);
-
-            foreach (var control in tabCoffee.Controls)
-            {
-
-                if (control is CheckBox)
-                {
-                    CheckBox box = (CheckBox)control;
-
-                    if (box.Checked)
-                    {
-                        Options op = new Options();
-                        string[] optionValues = ReturnSelectionInformation("/data/CoffeeOptions.txt", box.Tag.ToString());
-                        op.Name = optionValues[1];
-                        op.Quantity = 1;
-                        op.Value = Convert.ToDouble(optionValues[3]);
-                        myLine.OrderLineOptions.Add(op);
-                    }
-                }
-            }
-            masterOrder.AddItemToOrder(myLine);
-            if (firstItem)
-            {
-                AddedFirstItem();
-            }
-            
-            firstItem = false;
-        }
-
-        private void UpdateCart()
-        {
-            lblItemInfo.Text = "Items: " + masterOrder.GetTotalItems().ToString();
-            lblItemSubtotal.Text = masterOrder.GetOrderValue().ToString("C");
-
-            //string btnString = String.Format("Checkout:  {0} item at {1:C}", masterOrder.GetTotalItems(), masterOrder.GetOrderValue());
-            //btnCheckout.Text = btnString;
-        }
+        }        
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             CheckoutForm cForm = new CheckoutForm(masterOrder);
-            cForm.ShowDialog();            
+            cForm.ShowDialog();
+            masterOrder.ClearOrder();
+            UpdateCart();
+            UpdateOrderSummaryView();
+            InitializeOrder();
         }
 
         private void lblItemSubtotal_Click(object sender, EventArgs e)
@@ -368,19 +447,44 @@ namespace Cafe
 
         private void button1_Click(object sender, EventArgs e)
         {
-            masterOrder.ClearOrder();
+            masterOrder.ClearOrder();            
             UpdateCart();
             UpdateOrderSummaryView();
-        }
+            InitializeOrder();
+            LoadTopPick();
+        }                         
 
-        private void label1_Click(object sender, EventArgs e)
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UncheckAllCheckBoxes();            
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateMenuItems();
+        }
+
+        private void radioMenuOptions_CheckerChanged(object sender, EventArgs e)
+        {
+            UpdateMenuItems();
+            LoadTopPick();
+        }
+
+        
     }
 }

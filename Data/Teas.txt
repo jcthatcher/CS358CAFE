@@ -1,10 +1,8 @@
-﻿1, Blueberry, 3.50
-2, Chai, 3.25
-3, Mango, 4.75
-4, Green Tea, 2.50
-5, Earl Grey, 5.98
-6, Darjeeling, 5.25
-7, Sencha, 7.65
-8, Masala, 6.50
-9, Keemum, 3.20
-10, Bai Mudan, 6.23
+﻿1, Blueberry,$3.50,Chinese black tea elderberries blackberry leave blueberry essence. 
+2, Chai,$3.25,Indian black tea cardamom, cinnamon ginger root black pepper cloves.
+3, Madeleine,$4.75,Sri Lankan black tea Chinese green tea jasmine bergamot oil rose petals natural flavor. 
+4, Ginger Peach,$2.50,Indian Nilgiri black tea ginger root peach pieces natural flavor artificial flavor vanilla pieces. 
+5, Kentucky Blean,$5.98,Look for a complex earthy taste with a rich astringency in this tippy blend of teas from the Yunnan and Anhui Provinces of China. 
+6, Noel,$5.25,Sri Lankan black tea orange peel cinnamon. 
+7, Spiced Pumpkin,$7.65,Assam black tea Sri Lankan black tea vanilla bean cinnamon ginger nutmeg clove natural vanilla oil.
+8, Winter Solstice,$6.50,Black tea orange pieces cranberry pieces ginger root cinnamon peel.
